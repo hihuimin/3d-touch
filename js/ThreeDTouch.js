@@ -2,7 +2,7 @@
  * 3D Touch 事件处理器，传入要监听的 DOM 对象，在 callback 回调中获取当前 force 值
  *
  * @param { HTMLElement } el - 要监听的 DOM 对象
- * @param { Function } callback - 带有 force 值的回调函数，当不支持 3D Touch 时，force 值为 -1
+ * @param { Function } callback - 带有 force 值的回调函数
  *
  */
 function ThreeDTouch(el, callback) {
@@ -41,12 +41,7 @@ ThreeDTouch.prototype = {
 	},
 	_touchDidStart: function(ev) {
 		var touch = ev.touches[0]
-
-		if (touch.force == 0) { //force 为 0 表示不支持 3D Touch
-			this.callback(-1)
-		} else {
-			this._checkForce(touch)
-		}
+		this._checkForce(touch)
 	},
 	_touchDidEnd: function(ev) {
 		this.callback(0)

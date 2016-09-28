@@ -13,10 +13,22 @@ function $(sel) {
  */
 var ui = {
 	update: function(val) {
-		this.force = val
-		this._updateForceVal()
-		this._scaleBtnMask()
-		this._makeSlothLaugh()
+		if (this._checkSupport(val)) {
+			this.force = val
+			this._updateForceVal()
+			this._scaleBtnMask()
+			this._makeSlothLaugh()
+		} else {
+			this.force = -1
+			this._updateForceVal()
+		}
+	},
+	_sum: 0,
+	_i: 0,
+	//10 次 force 相加还是 0 的话，则判定为不支持
+	_checkSupport: function(force) {
+		this._sum += force
+		return !(this._i++ > 10 && this._sum == 0)
 	},
 	_updateForceVal: function() {
 		$('#force_val')[0].innerHTML = this.force == -1 ? '不支持 3D Touch :(' : this.force
@@ -34,7 +46,7 @@ var ui = {
 	}
 }
 
-//GO
+//GO~
 new ThreeDTouch($('#force_btn')[0], function(force) {
 	ui.update(force)
 })
